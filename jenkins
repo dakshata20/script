@@ -1,9 +1,10 @@
 pipeline {
     agent any
+
     stages {
-        stage('build') {
+        stage('Hello Dakshata') {
             steps {
-                bat 'whoami'
+                echo 'Hello, Dakshata Mane!'
             }
         }
     }
