@@ -6,18 +6,10 @@ pipeline {
         choice(name: "environment", choices: ["", "idev", "sqi", "svt", "sit", "staging", "prod"], description: "Select the deployment environment")
         choice(name: 'select_option', choices: ['','Consul_cron_disable', 'Consul_cron_enable'], description: 'Select an option')
         booleanParam(name: 'SKIP_BUILD', defaultValue: false, description: 'Skip the build stage')
+        string(name : 'input' , defaultValue: "inputValue",description: 'This ias a input')
     }
 
     stages {
-        stage('Parameter Selection') {
-            steps {
-                script {
-                    echo "Selected Project: ${params.project_name}"
-                    echo "Selected Environment: ${params.environment}"
-                    echo "Selected Option: ${params.select_option}"
-                }
-            }
-        }
 
         stage('Skip Build') {
             when {
@@ -26,6 +18,16 @@ pipeline {
             steps {
                 script {
                     echo "Skipping the build stage as per user's request."
+                }
+            }
+        }
+       
+        stage('Selected Parameters') {
+            steps {
+                script {
+                    echo "Selected Project: ${params.project_name}"
+                    echo "Selected Environment: ${params.environment}"
+                    echo "Selected Option: ${params.select_option}"
                 }
             }
         }
