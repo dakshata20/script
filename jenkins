@@ -1,11 +1,56 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['sit', 'svt', 'prod'], description: 'Select the deployment environment')
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the branch name for deployment')
+        booleanParam(name: 'SKIP_BUILD', defaultValue: false, description: 'Skip the build stage')
+    }
+
     stages {
-        stage('Hello Dakshata') {
+        stage('Parameter Selection') {
             steps {
-                echo 'Hello, Dakshata Mane!'
+                script {
+                    echo "Selected Environment: ${params.ENVIRONMENT}"
+                    echo "Selected Branch Name: ${params.BRANCH_NAME}"
+                }
             }
+        }
+
+        stage('Skip Build') {
+            when {
+                expression { params.SKIP_BUILD == true }
+            }
+            steps {
+                script {
+                    echo "Skipping the build stage as per user's request."
+                }
+            }
+        }
+
+        stage('Your Other Stages Here') {
+            steps {
+                script {
+                    if (params.SKIP_BUILD != true) {
+                        echo 'Executing the build stage...'
+                        // Add your build steps here
+                    } else {
+                        echo 'Build stage skipped as per user\'s request.'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline  successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. '
+        }
+        always{
+             cleanWs()
         }
     }
 }
