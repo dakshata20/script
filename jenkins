@@ -28,6 +28,7 @@ pipeline {
                     echo "Selected Project: ${params.project_name}"
                     echo "Selected Environment: ${params.environment}"
                     echo "Selected Option: ${params.select_option}"
+                    echo "Input: ${params.input}"
                 }
             }
         }
