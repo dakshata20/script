@@ -30,12 +30,11 @@ pipeline {
             }
         }
 
-        stage('Your Other Stages Here') {
+        stage('Stage 1') {
             steps {
                 script {
                     if (params.SKIP_BUILD != true) {
                         echo 'Executing the build stage...'
-                        // Add your build steps here
                     } else {
                         echo 'Build stage skipped as per user\'s request.'
                     }
