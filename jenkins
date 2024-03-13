@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'ENVIRONMENT', choices: ['sit', 'svt', 'prod'], description: 'Select the deployment environment')
-        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Enter the branch name for deployment')
+        choice(name: "project_name", choices: ["eomsys"], description: "Choose the appropriate project")
+        choice(name: "environment", choices: ["", "idev", "sqi", "svt", "sit", "staging", "prod"], description: "Select the deployment environment")
+        choice(name: 'select_option', choices: ['','Consul_cron_disable', 'Consul_cron_enable'], description: 'Select an option')
         booleanParam(name: 'SKIP_BUILD', defaultValue: false, description: 'Skip the build stage')
     }
 
@@ -11,8 +12,9 @@ pipeline {
         stage('Parameter Selection') {
             steps {
                 script {
-                    echo "Selected Environment: ${params.ENVIRONMENT}"
-                    echo "Selected Branch Name: ${params.BRANCH_NAME}"
+                    echo "Selected Project: ${params.project_name}"
+                    echo "Selected Environment: ${params.environment}"
+                    echo "Selected Option: ${params.select_option}"
                 }
             }
         }
